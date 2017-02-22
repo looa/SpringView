@@ -25,7 +25,7 @@ public class TestActivity extends Activity implements RadioGroup.OnCheckedChange
         springView = (SpringView) findViewById(R.id.my);
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(View view) {
                 Toast.makeText(TestActivity.this, "onRefresh", Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -36,8 +36,8 @@ public class TestActivity extends Activity implements RadioGroup.OnCheckedChange
             }
 
             @Override
-            public void onLoadmore() {
-                Toast.makeText(TestActivity.this, "onLoadmore", Toast.LENGTH_SHORT).show();
+            public void onLoadMore(View view) {
+                Toast.makeText(TestActivity.this, "onLoadMore", Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

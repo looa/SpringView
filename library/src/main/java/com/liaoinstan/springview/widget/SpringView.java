@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -94,15 +93,15 @@ public class SpringView extends ViewGroup{
             give = Give.values()[give_int];
         }
         if (ta.hasValue(R.styleable.SpringView_header)){
-            headerResoureId = ta.getResourceId(R.styleable.SpringView_header, 0);
+            headerResourceId = ta.getResourceId(R.styleable.SpringView_header, 0);
         }
         if (ta.hasValue(R.styleable.SpringView_footer)){
-            footerResoureId = ta.getResourceId(R.styleable.SpringView_footer, 0);
+            footerResourceId = ta.getResourceId(R.styleable.SpringView_footer, 0);
         }
         ta.recycle();
     }
-    private int headerResoureId;
-    private int footerResoureId;
+    private int headerResourceId;
+    private int footerResourceId;
 
     @Override
     protected void onFinishInflate() {
@@ -112,12 +111,12 @@ public class SpringView extends ViewGroup{
         }
         setPadding(0,0,0,0);
         contentView.setPadding(0,contentView.getPaddingTop(),0,contentView.getPaddingBottom());
-        if (headerResoureId!=0){
-            inflater.inflate(headerResoureId, this, true);
+        if (headerResourceId !=0){
+            inflater.inflate(headerResourceId, this, true);
             header = getChildAt(getChildCount()-1);
         }
-        if (footerResoureId!=0){
-            inflater.inflate(footerResoureId, this, true);
+        if (footerResourceId !=0){
+            inflater.inflate(footerResourceId, this, true);
             footer = getChildAt(getChildCount()-1);
             footer.setVisibility(INVISIBLE);
         }
@@ -552,18 +551,18 @@ public class SpringView extends ViewGroup{
     private void callOnAfterRefreshAnim(){
         if (type == Type.FOLLOW) {
             if (isTop()) {
-                listener.onRefresh();
+                listener.onRefresh(this);
             } else if (isBottom()) {
-                listener.onLoadmore();
+                listener.onLoadMore(this);
             }
         }else if(type == Type.OVERLAP){
             if (!isMoveNow) {
                 long nowtime = System.currentTimeMillis();
                 if (nowtime-lastMoveTime>=MOVE_TIME_OVER){
                     if (callFreshORload == 1)
-                        listener.onRefresh();
+                        listener.onRefresh(this);
                     if (callFreshORload == 2)
-                        listener.onLoadmore();
+                        listener.onLoadMore(this);
                 }
             }
         }
@@ -612,12 +611,12 @@ public class SpringView extends ViewGroup{
             if (callFreshORload == 1) {
                 if (headerHander != null) headerHander.onFinishAnim();
                 if (give == Give.BOTTOM || give == Give.NONE){
-                    listener.onRefresh();
+                    listener.onRefresh(this);
                 }
             } else if (callFreshORload == 2) {
                 if (footerHander != null) footerHander.onFinishAnim();
                 if (give == Give.TOP || give == Give.NONE){
-                    listener.onLoadmore();
+                    listener.onLoadMore(this);
                 }
             }
             callFreshORload=0;
@@ -704,7 +703,7 @@ public class SpringView extends ViewGroup{
                 public void onAnimationEnd(Animation animation) {
                     callFreshORload = 1;
                     needResetAnim = true;
-                    listener.onRefresh();
+                    listener.onRefresh(SpringView.this);
                 }
 
                 @Override
@@ -1019,11 +1018,11 @@ public class SpringView extends ViewGroup{
         /**
          * 下拉刷新，回调接口
          */
-        void onRefresh();
+        void onRefresh(View view);
         /**
          * 上拉加载，回调接口
          */
-        void onLoadmore();
+        void onLoadMore(View view);
     }
 
     public View getHeaderView(){

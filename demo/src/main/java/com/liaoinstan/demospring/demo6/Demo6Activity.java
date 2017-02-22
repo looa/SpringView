@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.RadioGroup;
 
 import com.liaoinstan.demospring.R;
@@ -32,7 +33,7 @@ public class Demo6Activity extends AppCompatActivity  implements RadioGroup.OnCh
 //        springView.setGive(SpringView.Give.NONE);
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(View view) {
                 //如果当前设置的头部是QQHeader,则不finish
                 if (springView.getHeader() instanceof QQHeader)
                     return;
@@ -45,7 +46,7 @@ public class Demo6Activity extends AppCompatActivity  implements RadioGroup.OnCh
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore(View view) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

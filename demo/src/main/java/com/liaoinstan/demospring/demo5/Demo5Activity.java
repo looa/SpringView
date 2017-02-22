@@ -3,8 +3,10 @@ package com.liaoinstan.demospring.demo5;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.liaoinstan.demospring.R;
 import com.liaoinstan.springview.container.AcFunFooter;
@@ -26,11 +28,11 @@ public class Demo5Activity extends AppCompatActivity {
         springView.setGive(SpringView.Give.NONE);
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(View view) {
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore(View view) {
             }
         });
         springView.setHeader(new AcFunHeader(this,R.drawable.acfun_header));

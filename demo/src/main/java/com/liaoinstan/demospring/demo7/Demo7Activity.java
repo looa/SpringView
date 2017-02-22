@@ -34,7 +34,7 @@ public class Demo7Activity extends AppCompatActivity{
         springView.setType(SpringView.Type.FOLLOW);
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(View view) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -44,7 +44,7 @@ public class Demo7Activity extends AppCompatActivity{
             }
 
             @Override
-            public void onLoadmore() {
+            public void onLoadMore(View view) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
